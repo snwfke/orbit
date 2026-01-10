@@ -8,58 +8,51 @@
 > [!WARNING]
 > This project is currently in alpha, bugs may be present when used.
 
-orbit is a "micro"-transpiler that generates Lua from Zig code — <i>typesafe code generation</i>.
+orbit is a microtranspiler[^1] that generates Lua from Zig code — <i>focused on typesafe code generation</i>.
 
-Inspired by *[ziglua](https://github.com/natecraddock/ziglua)*, orbit aims to be a simple, easy-to-replicate
-solution for DCS transpilation scripting.
+Inspired by *[ziglua](https://github.com/natecraddock/ziglua)* and *[c2z](https://github.com/lassade/c2z)*,
+orbit aims to be a simple, easy-to-replicate transcompiler[^1] solution for DCS modding and universal language adoption.
+
+[^1]: This is an alternative name to a [source-to-source compiler](https://en.wikipedia.org/wiki/Source-to-source_compiler), majorly responsible
+the pragmatics in language-to-language conversion.
 
 ## Features
 
-<img align="left" height="44" src="" />
+<img align="left" src="https://github.com/user-attachments/assets/d221101a-e7a5-4de0-9ce8-265c8752a875" />
 <ul><ul>
-    <b>Low level API architecture</b><br/>
-    We completely utilise Zig for everything. zorm is more than just an ORM or framework - it's an extensive set of
-    datatypes that can be used across many projects, even if you're not wanting to necessarily write to a database.<br/>
-    <a href="USAGE.md">Learn more →</a>
-</ul></ul>
-
-<img align="left" height="44" src="" />
-<ul><ul>
-    <b>Memory performant</b><br/>
-    With heavy allocator usage, you can expect a program that treats your memory as a limit,
-    not a suggestion. Objects come with a fixed buffer, <i>whereas</i> tables and queries expect
-    you to provide your own.
-</ul></ul>
-
-<img align="left" height="44" src="" />
-<ul><ul>
-    <b>ACID-guaranteed transactions</b><br/>
-    zorm's <code>Query</code> paradigm ensures atomicity, consistency, isolation and durability
-    within each and every transaction.<br/>
-    <i>This is currently work-in-progress.</i>
-</ul></ul>
-
-<img align="left" height="44" src="" />
-<ul><ul>
-    <b>Intuitionalistic object type theory</b><br/>
-    Objects are not a real concept in Zig, technically speaking. We've developed our own type theory,
-    ensuring the uniqueness of each object relative to its value, making your time building relationships
-    and mappings between them easier.<br/>
+    <b>Typesafe, selective transcompilation</b><br/>
+    Zig is our language of choice for typesafe programming, but is only being leveraged to a certain extent.
+    Because of this, orbit is philosophically built on only achieving certain Zig behaviours in Lua.<br/>
     <a href="THEORY.md">Learn more →</a>
 </ul></ul>
 
-## Getting started
+<img align="left" src="https://github.com/user-attachments/assets/0935fbf4-ddf4-4421-a2ac-1db48c472b03" />
+<ul><ul>
+    <b>Memory performant</b><br/>
+    With heavy allocator usage, you can expect a program that treats your memory as a limit,
+    not a suggestion. Structs, enums, tables, variables (constant) & imperative logic are compressed into
+    efficient Lua operations.
+</ul></ul>
 
-<img align="left" height="44" src="" />
+<img align="left" src="https://github.com/user-attachments/assets/fce48889-d2ef-4ca3-a3af-b01a4e750847" />
+<ul><ul>
+    <b>Scalable & modular</b><br/>
+    orbit's LVM structure is scaled by the desired behaviour and modularised in target-to-source translation,
+    allowing it to be used as a cookie-cutter template for other [insert]-to-Lua (LVM) programs.<br/>
+    <a href="LICENSE.md"> Learn more →</a>
+</ul></ul>
+
+## Getting started
+<img align="left" src="https://github.com/user-attachments/assets/942a1fc6-5e1e-495e-87d6-0c9ecc33d277" />
 <ul><ul>
     <b>Download</b><br/>
     <ul>
-        <li><a href="https://github.com/snwfke/zorm/releases">Official releases</a></li>
+        <li><a href="https://github.com/snwfke/orbit/releases">Official releases</a></li>
         <li><a href="/#building">Build from source</a></li>
     </ul>
 </ul></ul>
 
-<img align="left" height="44" src="" />
+<img align="left" src="https://github.com/user-attachments/assets/be074c48-9af6-43bf-a248-81615ee29f26" />
 <ul><ul>
     <b>Usage</b><br/>
     <ul>
