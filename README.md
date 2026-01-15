@@ -39,7 +39,7 @@ the pragmatics in language-to-language conversion.
     <b>Scalable & modular</b><br/>
     orbit's LVM structure is scaled by the desired behaviour and modularised in target-to-source translation,
     allowing it to be used as a cookie-cutter template for other [insert]-to-Lua (LVM) programs.<br/>
-    <a href="LICENSE.md"> Learn more →</a>
+    <a href="LICENSE"> Learn more →</a>
 </ul></ul>
 
 ## Getting started
