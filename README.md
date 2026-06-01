@@ -49,7 +49,7 @@ the pragmatics in language-to-language conversion.
     <b>Download</b><br/>
     <ul>
         <li><a href="https://github.com/snwfke/orbit/releases">Official releases</a></li>
-        <li><a href="/#building">Build from source</a></li>
+        <li><a href="#building">Build from source</a></li>
     </ul>
 </ul></ul>
 
@@ -57,7 +57,7 @@ the pragmatics in language-to-language conversion.
 <ul><ul>
     <b>Usage</b><br/>
     <ul>
-        <li><a href="/#getting-started">Quickstart</a></li>
+        <li><a href="#getting-started">Quickstart</a></li>
     </ul>
 </ul></ul>
 
