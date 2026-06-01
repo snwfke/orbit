@@ -39,7 +39,7 @@ the pragmatics in language-to-language conversion.
 <ul><ul>
     <b>Scalable & modular</b><br/>
     orbit's LVM structure is scaled by the desired behaviour and modularised in target-to-source translation,
-    allowing it to be used as a cookie-cutter template for other [insert]-to-Lua (LVM) programs.<br/>
+    we allow orbit to be used as a template for other [insert]-to-Lua (LVM) programs.<br/>
     <a href="LICENSE"> Learn more →</a>
 </ul></ul>
 
@@ -57,9 +57,7 @@ the pragmatics in language-to-language conversion.
 <ul><ul>
     <b>Usage</b><br/>
     <ul>
-        <li><a href="/#">Documentation</a></li>
-        <li><a href="/#quickstart">Quickstart</a></li>
-        <li><a href="/#">Guides</a></li>
+        <li><a href="/#getting-started">Quickstart</a></li>
     </ul>
 </ul></ul>
 
@@ -75,7 +73,7 @@ $ zig build
 
 Optionally, you can skip over the `$ git clone` process and build from within the target folder.
 
-### Quickstart
+### Getting started
 
 If orbit is used as a library, your `build.zig` file needs the following code:
 
