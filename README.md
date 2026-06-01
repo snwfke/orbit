@@ -2,7 +2,8 @@
     <img src="https://github.com/user-attachments/assets/cb4b5ee0-fc95-4c27-89b6-f1d023d81c7b" />
     orbit
     <!-- <img src="https://github.com/snwfke/zorm/actions/workflows/zig_build.yaml/badge.svg?branch=main" /> -->
-    <img src="https://img.shields.io/badge/zig--version-0.15.2-orange" />
+    <img src="https://img.shields.io/badge/zig-0.14.0-orange" />
+    <img src="https://img.shields.io/badge/orbit-v0.1.0--alpha-black" />
 </h1>
 
 > [!WARNING]
@@ -76,9 +77,17 @@ Optionally, you can skip over the `$ git clone` process and build from within th
 
 ### Quickstart
 
-In your `build.zig` file, declare the following code:
+If orbit is used as a library, your `build.zig` file needs the following code:
 
 ```zig
 const orbit_module = b.dependency("orbit", .{}).module("orbit");
 exe.addModule("orbit", orbit_module);
+```
+
+Otherwise, orbit is intended to be used as a compiled executable:
+
+```bash
+$ cd orbit
+$ zig build
+$ "zig-out/orbit -F test.zig -o generated.zig"
 ```

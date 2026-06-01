@@ -18,7 +18,7 @@ C/C++ drop-in compiler so you simplify having to build `.dll` binaries, e.g. EFM
 your code into Lua? That is what orbit focuses on.
 
 ## Motive
-By utilising *[ziglua](https://github.com/natecraddock/ziglua)* and building an AST-based compiler, orbit could be used as both:
+Taking inspiration from *[ziglua](https://github.com/natecraddock/ziglua)*, we'll build a lexer-parser code generato. orbit could be used as both:
 
 <ul>a.) a bridge layer, interoperability between both Zig and Lua;</ul>
 <ul>b.) a drop-in transpilation & compilation solution for managing C++ and Lua.</ul>
@@ -83,11 +83,6 @@ function foo()
   return nil
 end
 
--- Lua only accepts alphanumeric with underscore naming with functions, the best workaround is via.
--- table key. all extern will always be accessible in a global variable as such. be mindful that
--- declarations are created separate, referencing or caching may be necessary
-extern["fstat$INODE64"] = function() end
-
 function baz()
   bax = false
   return bax
@@ -97,6 +92,12 @@ function luaFoo()
   local luaBar = true
   return luaBar
 end
+
+-- Lua only accepts alphanumeric with underscore naming with functions, the best workaround is via.
+-- table key. all extern will always be accessible in a global variable as such. be mindful that
+-- declarations are created separate, referencing or caching may be necessary
+extern = {}
+extern["fstat$INODE64"] = function() end
 ```
 
 ## Implementation
@@ -109,10 +110,10 @@ in Zig than intended in Lua.
 Building a microtranspiler means we need to consider the following steps in chronological order:
 
 1. Intermediate Representation (IR) - we have to cut our food into chewable pieces before we can swallow, right?
-    - ZIR - Zig IR, we perform syntactic lowering on the code (erase types, eliminate repetitions, etc.) and convert it into an AST structure 
-    - OIR - Orbit IR, we start semantic analysis on the AST structure and prepare it for LVM codegen
-    - LIR - Lua IR, we take the instructions and convert it into bytecode for the LVM to interpret
-2. Language bindings – we can use ziglua for this, but the *real* caveat is working in Lua. Any Lua file wanting to work with orbit needs to be a Lua C file and `require` in a normal Lua. (Module management?)
+    - ZIR - Zig IR, we perform syntactic lowering on the code (erase types, eliminate repetitions, etc.) and convert it into an AST structure.
+    - OIR - "Orbit IR", we start semantic analysis on the AST structure and prepare it for LVM codegen.
+    - LIR - Lua IR, we take the instructions and convert it into characters for the LVM to parse as source.
+2. Language bindings – we could use ziglua for this, but the *real* caveat is working in Lua. Any Lua file wanting to work with orbit needs to be a Lua C file and `require` in a normal Lua. (Module management?)
 3. Command Line Interpreter (CLI) – it's going to simplify peoples' lives a lot more if you can use it like a CLI, e.g.
-    - `$ orbit build -F main.zig`
+    - `$ orbit build -F main.zig -o generated.lua`
     - `$ orbit build --string="std.debug.print(\"hello world!\", .{});"`
