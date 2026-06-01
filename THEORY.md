@@ -43,7 +43,8 @@ pub extern "c" fn @"fstat$INODE64"(fd: std.c.fd_t, buf: *std.c.Stat) c_int;
 
 // the user facing code may have different error types presented
 pub fn main() anyerror!void {
-  var lvm: orbit.Lvm = try orbit.createLvm(.{}); // a LOT could happen here, comes down to OS & I/O conditions
+  const alloc = std.heap.page_allocator;
+  var lvm = try orbit.Lvm.init(&alloc, .{}); // a LOT could happen here, comes down to OS & I/O conditions
   defer lvm.deinit();
 
   try lvm.build(foo); // comptime type reflection w/ generic, may return an error
