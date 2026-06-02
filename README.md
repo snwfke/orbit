@@ -43,7 +43,8 @@ the pragmatics in language-to-language conversion.
     <a href="LICENSE"> Learn more →</a>
 </ul></ul>
 
-## Getting started
+## Table of Contents
+
 <img align="left" height="24" src="https://github.com/user-attachments/assets/dd63b994-1e6e-4c68-a3a3-0f7fc979b5ee" />
 <ul><ul>
     <b>Download</b><br/>
@@ -61,7 +62,11 @@ the pragmatics in language-to-language conversion.
     </ul>
 </ul></ul>
 
-### Building
+## Roadmap
+
+This is an non-exhaustive list of items being tracked for the orbit roadmap. You can learn more about it here: 
+
+## Building
 
 If you are wanting to build from source, enter the following commands into your command line:
 
@@ -73,7 +78,7 @@ $ zig build
 
 Optionally, you can skip over the `$ git clone` process and build from within the target folder.
 
-### Getting started
+## Getting Started
 
 If orbit is used as a library, your `build.zig` file needs the following code:
 
@@ -87,5 +92,5 @@ Otherwise, orbit is intended to be used as a compiled executable:
 ```bash
 $ cd orbit
 $ zig build
-$ "zig-out/orbit -F test.zig -o generated.zig"
+$ "zig-out/orbit -F test.zig -o generated.lua"
 ```
