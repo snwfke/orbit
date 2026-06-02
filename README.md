@@ -1,5 +1,5 @@
 <h1>
-    <img src="https://github.com/user-attachments/assets/cb4b5ee0-fc95-4c27-89b6-f1d023d81c7b" />
+    <img width="32" height="32" src="https://github.com/user-attachments/assets/5ebc7f8d-f3f5-4aef-ba7f-9234a62c18d3" />
     orbit
     <!-- <img src="https://github.com/snwfke/zorm/actions/workflows/zig_build.yaml/badge.svg?branch=main" /> -->
     <img src="https://img.shields.io/badge/zig-0.14.0-orange" />
@@ -19,7 +19,7 @@ the pragmatics in language-to-language conversion.
 
 ## Features
 
-<img align="left" src="https://github.com/user-attachments/assets/d221101a-e7a5-4de0-9ce8-265c8752a875" />
+<img align="left" height="24" src="https://github.com/user-attachments/assets/172a4360-4e79-4592-9868-08bc2ba93896" />
 <ul><ul>
     <b>Typesafe, selective transpilation.</b><br/>
     Zig is our language of choice for typesafe programming, but is only being leveraged to a certain extent.
@@ -27,7 +27,7 @@ the pragmatics in language-to-language conversion.
     <a href="THEORY.md">Learn more →</a>
 </ul></ul>
 
-<img align="left" src="https://github.com/user-attachments/assets/0935fbf4-ddf4-4421-a2ac-1db48c472b03" />
+<img align="left" height="24" src="https://github.com/user-attachments/assets/31efe4e4-ee1b-4b48-80b1-866a8fd2bd5f" />
 <ul><ul>
     <b>Heap memory performant.</b><br/>
     With heavy heap allocations, you can expect a program that treats your memory like a limit,
@@ -35,7 +35,7 @@ the pragmatics in language-to-language conversion.
     efficient Lua operations.
 </ul></ul>
 
-<img align="left" src="https://github.com/user-attachments/assets/fce48889-d2ef-4ca3-a3af-b01a4e750847" />
+<img align="left" height="24" src="https://github.com/user-attachments/assets/87ffe949-8ab1-45bc-8b75-571112906b61" />
 <ul><ul>
     <b>Scalable & modular.</b><br/>
     orbit's structure is meant to serve as a proof-of-concept and working prototype for any [insert]-to-Lua (LVM)
@@ -44,7 +44,7 @@ the pragmatics in language-to-language conversion.
 </ul></ul>
 
 ## Getting started
-<img align="left" src="https://github.com/user-attachments/assets/942a1fc6-5e1e-495e-87d6-0c9ecc33d277" />
+<img align="left" height="24" src="https://github.com/user-attachments/assets/dd63b994-1e6e-4c68-a3a3-0f7fc979b5ee" />
 <ul><ul>
     <b>Download</b><br/>
     <ul>
@@ -53,7 +53,7 @@ the pragmatics in language-to-language conversion.
     </ul>
 </ul></ul>
 
-<img align="left" src="https://github.com/user-attachments/assets/be074c48-9af6-43bf-a248-81615ee29f26" />
+<img align="left" height="24" src="https://github.com/user-attachments/assets/31f856f6-6db4-47e6-abf3-2360e7a87600" />
 <ul><ul>
     <b>Usage</b><br/>
     <ul>
