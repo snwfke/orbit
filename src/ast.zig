@@ -44,4 +44,13 @@ pub const Decl = struct {
 
 pub const Program = struct {
     decls: std.ArrayList(Decl),
+    // Arena backing every *Expr node allocated while parsing this program.
+    // Owned by the Program so callers can free all expression nodes with one
+    // call once they're done reading the AST (e.g. after codegen).
+    arena: std.heap.ArenaAllocator,
+
+    pub fn deinit(self: *Program) void {
+        self.decls.deinit();
+        self.arena.deinit();
+    }
 };

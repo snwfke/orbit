@@ -1,6 +1,23 @@
 const std = @import("std");
 const ast = @import("ast.zig");
 
+/// Escapes a raw string value for embedding inside a double-quoted Lua string
+/// literal (backslash, double-quote, newline, carriage-return, tab).
+fn appendLuaEscapedString(list: *std.ArrayList(u8), value: []const u8) !void {
+    try list.append('"');
+    for (value) |c| {
+        switch (c) {
+            '\\' => try list.appendSlice("\\\\"),
+            '"' => try list.appendSlice("\\\""),
+            '\n' => try list.appendSlice("\\n"),
+            '\r' => try list.appendSlice("\\r"),
+            '\t' => try list.appendSlice("\\t"),
+            else => try list.append(c),
+        }
+    }
+    try list.append('"');
+}
+
 pub fn generate(allocator: *const std.mem.Allocator, program: ast.Program) ![]const u8 {
     var out = std.ArrayList(u8).init(allocator.*);
     const writer = out.writer();
@@ -77,7 +94,11 @@ fn formatExpr(expr: *ast.Expr) []const u8 {
         .IntLiteral => std.fmt.allocPrint(std.heap.page_allocator, "{d}", .{expr.int_value}) catch "0",
         .BoolLiteral => if (expr.bool_value) "true" else "false",
         .NullLiteral => "nil",
-        .StringLiteral => expr.string_value,
+        .StringLiteral => blk: {
+            var list = std.ArrayList(u8).init(std.heap.page_allocator);
+            appendLuaEscapedString(&list, expr.string_value) catch break :blk expr.string_value;
+            break :blk list.toOwnedSlice() catch expr.string_value;
+        },
         .Binary => {
             const left = formatExpr(expr.left.?);
             const right = formatExpr(expr.right.?);

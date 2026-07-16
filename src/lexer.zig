@@ -20,6 +20,8 @@ pub const TokenKind = enum {
     At,
     LBrace,
     RBrace,
+    LBracket,
+    RBracket,
     LParen,
     RParen,
     Semicolon,
@@ -37,6 +39,7 @@ pub const TokenKind = enum {
     Minus,
     Star,
     Slash,
+    Question,
 };
 
 pub const Token = struct {
@@ -66,6 +69,14 @@ pub fn lex(allocator: *const std.mem.Allocator, source: []const u8) ![]Token {
             try tokens.append(Token{ .kind = .RBrace, .text = source[i .. i + 1] });
             continue;
         }
+        if (c == '[') {
+            try tokens.append(Token{ .kind = .LBracket, .text = source[i .. i + 1] });
+            continue;
+        }
+        if (c == ']') {
+            try tokens.append(Token{ .kind = .RBracket, .text = source[i .. i + 1] });
+            continue;
+        }
         if (c == '(') {
             try tokens.append(Token{ .kind = .LParen, .text = source[i .. i + 1] });
             continue;
@@ -92,6 +103,10 @@ pub fn lex(allocator: *const std.mem.Allocator, source: []const u8) ![]Token {
         }
         if (c == '@') {
             try tokens.append(Token{ .kind = .At, .text = source[i .. i + 1] });
+            continue;
+        }
+        if (c == '?') {
+            try tokens.append(Token{ .kind = .Question, .text = source[i .. i + 1] });
             continue;
         }
         if (c == '+') {

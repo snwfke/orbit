@@ -39,8 +39,8 @@ pub fn transpileSource(allocator: *const std.mem.Allocator, source: []const u8) 
     const tokens = try lexer.lex(allocator, source);
     defer lexer.freeTokens(allocator, tokens);
 
-    const program = try parser.parse(allocator, tokens);
-    defer program.decls.deinit();
+    var program = try parser.parse(allocator, tokens);
+    defer program.deinit();
 
     return try codegen.generate(allocator, program);
 }

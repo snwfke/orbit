@@ -11,14 +11,24 @@ pub const Parser = struct {
 };
 
 pub fn parse(allocator: *const std.mem.Allocator, tokens: []lexer.Token) Error!ast.Program {
-    var arena = std.heap.ArenaAllocator.init(allocator.*);
+    // IMPORTANT: `arena_allocator` must be derived from the Parser's OWN
+    // `.arena` field (not from a separate local variable that then gets
+    // copied by value into the struct). std.heap.ArenaAllocator.allocator()
+    // captures a pointer to whichever ArenaAllocator instance it was called
+    // on; if that instance is copied afterwards, every allocation still
+    // mutates the original (now-orphaned) copy while the one actually
+    // returned to the caller stays stuck at its pre-parse, empty state -
+    // silently leaking every node allocated during parsing once that
+    // orphaned copy's stack frame goes away.
     var parser = Parser{
         .allocator = allocator,
         .tokens = tokens,
         .pos = 0,
-        .arena = arena,
-        .arena_allocator = arena.allocator(),
+        .arena = std.heap.ArenaAllocator.init(allocator.*),
+        .arena_allocator = undefined,
     };
+    parser.arena_allocator = parser.arena.allocator();
+    errdefer parser.arena.deinit();
     return try parseProgram(&parser);
 }
 
@@ -27,7 +37,7 @@ fn parseProgram(p: *Parser) Error!ast.Program {
     while (peek(p).kind != .EOF) {
         try decls.append(try parseDecl(p));
     }
-    return ast.Program{ .decls = decls };
+    return ast.Program{ .decls = decls, .arena = p.arena };
 }
 
 fn parseDecl(p: *Parser) Error!ast.Decl {
@@ -66,7 +76,7 @@ fn parseDecl(p: *Parser) Error!ast.Decl {
 
 fn parseParameters(p: *Parser) Error![]ast.Parameter {
     _ = try expect(p, .LParen);
-    var params = std.ArrayList(ast.Parameter).init(p.allocator.*);
+    var params = std.ArrayList(ast.Parameter).init(p.arena_allocator);
     while (peek(p).kind != .RParen and peek(p).kind != .EOF) {
         const nameToken = try expect(p, .Identifier);
         _ = match(p, .Colon);
@@ -81,21 +91,23 @@ fn parseParameters(p: *Parser) Error![]ast.Parameter {
 }
 
 fn skipReturnType(p: *Parser) []const u8 {
-    if (match(p, .Colon)) {
-        const start = p.pos;
-        while (peek(p).kind != .LBrace and peek(p).kind != .Semicolon and peek(p).kind != .EOF) {
-            _ = next(p);
-        }
-        if (p.pos > start) {
-            return p.tokens[start].text;
-        }
+    // Zig return types are written directly after the parameter list, with no
+    // leading colon (e.g. `fn foo() ?u8 { ... }`), unlike a `const`/`var`
+    // type annotation. Skip everything up to the function body's opening
+    // brace (or a trailing semicolon for `extern` declarations).
+    const start = p.pos;
+    while (peek(p).kind != .LBrace and peek(p).kind != .Semicolon and peek(p).kind != .EOF) {
+        _ = next(p);
+    }
+    if (p.pos > start) {
+        return p.tokens[start].text;
     }
     return "";
 }
 
 fn parseBlock(p: *Parser) Error![]ast.Stmt {
     _ = try expect(p, .LBrace);
-    var stmts = std.ArrayList(ast.Stmt).init(p.allocator.*);
+    var stmts = std.ArrayList(ast.Stmt).init(p.arena_allocator);
     while (!match(p, .RBrace)) {
         try stmts.append(try parseStmt(p));
     }
@@ -105,7 +117,10 @@ fn parseBlock(p: *Parser) Error![]ast.Stmt {
 fn parseStmt(p: *Parser) Error!ast.Stmt {
     if (match(p, .If)) {
         const condition = try parseExpression(p);
-        _ = try expect(p, .Then);
+        // Real Zig `if` statements have no `then` keyword (`if (cond) stmt`),
+        // but tolerate one if present for backwards compatibility with any
+        // existing orbit-flavored source that used it explicitly.
+        _ = match(p, .Then);
         const then_body = try parseStmtBlockOrStmt(p);
         var else_body: []ast.Stmt = &.{};
         if (match(p, .Else)) {
@@ -142,7 +157,7 @@ fn parseStmtBlockOrStmt(p: *Parser) Error![]ast.Stmt {
     if (peek(p).kind == .LBrace) {
         return try parseBlock(p);
     }
-    var stmts = std.ArrayList(ast.Stmt).init(p.allocator.*);
+    var stmts = std.ArrayList(ast.Stmt).init(p.arena_allocator);
     try stmts.append(try parseStmt(p));
     return stmts.toOwnedSlice();
 }
