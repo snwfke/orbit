@@ -3,7 +3,7 @@
     orbit
     <!-- <img src="https://github.com/snwfke/zorm/actions/workflows/zig_build.yaml/badge.svg?branch=main" /> -->
     <img src="https://img.shields.io/badge/zig-0.14.0-orange" />
-    <img src="https://img.shields.io/badge/orbit-v0.1.0--alpha-black" />
+    <img src="https://img.shields.io/badge/orbit-v0.1.0--rc.1-black" />
 </h1>
 
 > [!WARNING]
