@@ -6,8 +6,8 @@
     <img src="https://img.shields.io/badge/orbit-v0.1.0--rc.1-black" />
 </h1>
 
-> [!WARNING]
-> This project is currently in alpha, bugs may be present when used.
+> [!CAUTION]
+> This is a release candidate. Undesired behaviour may be present when used.
 
 orbit is a microtranspiler[^1] that generates Lua from Zig code — <i>focused on typesafe code generation</i>.
 
